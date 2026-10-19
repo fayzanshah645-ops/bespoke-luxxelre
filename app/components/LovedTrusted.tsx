@@ -99,18 +99,18 @@ export default function LovedTrusted() {
       <div className="absolute inset-0 bg-black/65" />
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
         {/* Title and Balanced Subtitle (Zero Dashes, Centered) */}
-        <div className="text-center mb-8">
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-ivory text-center leading-tight mb-3">
+        <div className="text-center mb-6 sm:mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-ivory text-center leading-tight mb-2.5 sm:mb-3">
             Our Happy Clients
           </h2>
-          <p className="text-[13.5px] md:text-[14.5px] text-ivory/85 text-center font-light max-w-lg mx-auto leading-relaxed text-balance">
+          <p className="text-[12.5px] sm:text-[13.5px] md:text-[14.5px] text-ivory/85 text-center font-light max-w-lg mx-auto leading-relaxed text-balance">
             Authentic reflections from brides and patrons across the world who cherish our handcrafted Kashmiri heirlooms.
           </p>
         </div>
 
-        {/* Carousel with Fixed Beside-Card Arrow Icons (No bulky buttons, fixed alignment) */}
+        {/* Carousel with Responsive Controls */}
         <div
           className="relative max-w-3xl mx-auto"
           onMouseEnter={() => setIsPaused(true)}
@@ -118,12 +118,12 @@ export default function LovedTrusted() {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="flex items-center justify-center gap-3 md:gap-6">
-            {/* Left Arrow Icon (Clean SVG, Fixed Position) */}
+          <div className="flex items-center justify-center gap-0 md:gap-6">
+            {/* Desktop Left Arrow Icon */}
             <button
               onClick={handlePrev}
               aria-label="Previous review"
-              className="text-ivory/70 hover:text-ivory transition-colors p-2 shrink-0"
+              className="hidden md:flex text-ivory/70 hover:text-ivory transition-colors p-2 shrink-0"
             >
               <svg
                 width="26"
@@ -150,28 +150,28 @@ export default function LovedTrusted() {
                 {reviews.map((rev, idx) => (
                   <div key={idx} className="w-full flex-shrink-0 px-1">
                     {/* Fixed Equal Height Card (Never Jumps or Shifts) */}
-                    <div className="bg-white text-dark p-7 md:p-8 shadow-2xl relative h-[240px] md:h-[250px] flex flex-col justify-between">
+                    <div className="bg-white text-dark p-5 sm:p-7 md:p-8 shadow-2xl relative min-h-[220px] sm:min-h-[240px] md:h-[250px] flex flex-col justify-between">
                       <div>
-                        {/* Top Row: User Avatar, Name, Time, and Only the Google Icon */}
-                        <div className="flex items-center justify-between mb-3.5">
-                          <div className="flex items-center gap-3">
+                        {/* Top Row: User Avatar, Name, Time, and Google Icon */}
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2.5 sm:gap-3">
                             <div
-                              className={`w-9 h-9 rounded-full ${rev.avatarColor} text-white flex items-center justify-center font-display text-sm font-semibold shadow-sm shrink-0`}
+                              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full ${rev.avatarColor} text-white flex items-center justify-center font-display text-xs sm:text-sm font-semibold shadow-sm shrink-0`}
                             >
                               {rev.avatarInitial}
                             </div>
                             <div>
-                              <h4 className="font-display text-base text-dark font-medium leading-none">
+                              <h4 className="font-display text-[14px] sm:text-base text-dark font-medium leading-none">
                                 {rev.name}
                               </h4>
-                              <p className="text-[11px] text-muted font-light mt-1">
+                              <p className="text-[10.5px] sm:text-[11px] text-muted font-light mt-1">
                                 {rev.time}
                               </p>
                             </div>
                           </div>
 
                           {/* Google G Icon */}
-                          <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 24 24">
                             <path
                               fill="#4285F4"
                               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -192,7 +192,7 @@ export default function LovedTrusted() {
                         </div>
 
                         {/* 5 Stars */}
-                        <div className="flex items-center gap-1 text-amber-500 text-xs mb-3">
+                        <div className="flex items-center gap-1 text-amber-500 text-[11px] sm:text-xs mb-2.5">
                           <span>★</span>
                           <span>★</span>
                           <span>★</span>
@@ -201,7 +201,7 @@ export default function LovedTrusted() {
                         </div>
 
                         {/* Review Text */}
-                        <p className="text-[13px] md:text-[14px] leading-relaxed text-dark/85 font-light italic line-clamp-4">
+                        <p className="text-[12.5px] sm:text-[13.5px] md:text-[14px] leading-relaxed text-dark/85 font-light italic line-clamp-4">
                           “{rev.text}”
                         </p>
                       </div>
@@ -211,11 +211,11 @@ export default function LovedTrusted() {
               </div>
             </div>
 
-            {/* Right Arrow Icon (Clean SVG, Fixed Position) */}
+            {/* Desktop Right Arrow Icon */}
             <button
               onClick={handleNext}
               aria-label="Next review"
-              className="text-ivory/70 hover:text-ivory transition-colors p-2 shrink-0"
+              className="hidden md:flex text-ivory/70 hover:text-ivory transition-colors p-2 shrink-0"
             >
               <svg
                 width="26"
@@ -232,18 +232,43 @@ export default function LovedTrusted() {
             </button>
           </div>
 
-          {/* Minimal Dots Indicator */}
-          <div className="mt-6 flex items-center justify-center gap-2">
-            {reviews.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentIdx(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  idx === currentIdx ? "w-7 bg-ivory" : "w-2 bg-ivory/40 hover:bg-ivory/60"
-                }`}
-                aria-label={`Go to review ${idx + 1}`}
-              />
-            ))}
+          {/* Dots Indicator & Mobile Navigation Controls */}
+          <div className="mt-5 sm:mt-6 flex items-center justify-center gap-3 sm:gap-4">
+            {/* Mobile Left Arrow */}
+            <button
+              onClick={handlePrev}
+              aria-label="Previous review"
+              className="md:hidden text-ivory/80 hover:text-ivory p-1 transition-colors"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+
+            {/* Dots */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {reviews.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIdx(idx)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    idx === currentIdx ? "w-6 sm:w-7 bg-ivory" : "w-2 bg-ivory/40 hover:bg-ivory/60"
+                  }`}
+                  aria-label={`Go to review ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Mobile Right Arrow */}
+            <button
+              onClick={handleNext}
+              aria-label="Next review"
+              className="md:hidden text-ivory/80 hover:text-ivory p-1 transition-colors"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

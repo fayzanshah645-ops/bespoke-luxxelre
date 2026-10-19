@@ -51,26 +51,29 @@ export default function Header() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-[1500px] mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-8 h-20 lg:h-24">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
+          <div className="flex items-center justify-between gap-3 lg:gap-8 h-16 sm:h-20 lg:h-24">
             {/* Logo - left */}
             <Link
               href="/"
-              className={`flex items-center gap-3 transition-colors duration-500 ${textColor}`}
+              className={`flex items-center gap-2 sm:gap-3 transition-colors duration-500 shrink-0 whitespace-nowrap ${textColor}`}
             >
-              <Image
-                src={logoImg}
-                alt="Bespoke Luxurrele"
-                width={56}
-                height={56}
-                className="rounded-full object-contain"
-              />
-              <div className="flex flex-col leading-none">
-                <span className="font-display text-lg lg:text-xl tracking-[0.06em]">
+              <div className="relative w-8 h-8 sm:w-11 sm:h-11 lg:w-14 lg:h-14 shrink-0">
+                <Image
+                  src={logoImg}
+                  alt="Bespoke Luxurrele"
+                  fill
+                  sizes="(max-width: 640px) 32px, 56px"
+                  className="rounded-full object-contain"
+                  priority
+                />
+              </div>
+              <div className="flex flex-col leading-none whitespace-nowrap">
+                <span className="font-display text-[15px] sm:text-lg lg:text-xl tracking-[0.03em] sm:tracking-[0.06em] whitespace-nowrap">
                   Bespoke Luxurrele
                 </span>
                 <span
-                  className={`text-[7px] tracking-[0.35em] uppercase mt-1 transition-colors duration-500 ${subColor}`}
+                  className={`text-[6.5px] sm:text-[7px] tracking-[0.22em] sm:tracking-[0.35em] uppercase mt-1 transition-colors duration-500 whitespace-nowrap ${subColor}`}
                 >
                   Luxurious to the Core
                 </span>
@@ -79,7 +82,7 @@ export default function Header() {
 
             {/* Nav - center (single line, short words, balanced spacing) */}
             <nav
-              className={`hidden lg:flex items-center justify-center gap-5 xl:gap-7 text-[11px] xl:text-[12px] tracking-[0.16em] xl:tracking-[0.2em] uppercase font-light whitespace-nowrap transition-colors duration-500 ${textColor}`}
+              className={`hidden lg:flex items-center justify-center gap-5 xl:gap-7 text-[11px] xl:text-[12px] tracking-[0.16em] xl:tracking-[0.2em] uppercase font-light whitespace-nowrap transition-colors duration-500 flex-1 ${textColor}`}
             >
               <Link href="#latest-collection" className={`nav-link whitespace-nowrap ${hoverColor}`} onMouseEnter={() => setOpenMenu(null)}>
                 New Arrivals
@@ -105,7 +108,7 @@ export default function Header() {
             </nav>
 
             {/* Icons - right */}
-            <div className={`flex items-center gap-5 justify-end transition-colors duration-500 ${textColor}`}>
+            <div className={`flex items-center gap-3 sm:gap-4 lg:gap-5 justify-end shrink-0 transition-colors duration-500 ${textColor}`}>
               <Link
                 href="#account"
                 aria-label="Account"

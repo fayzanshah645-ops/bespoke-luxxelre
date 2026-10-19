@@ -8,10 +8,10 @@ import packagingImg from "../initiative-packaging.jpg";
 
 export default function CraftRevival() {
   return (
-    <section id="craft-revival" className="py-20 lg:py-28 bg-cream">
-      <div className="max-w-[1500px] mx-auto px-6 lg:px-10">
-        <div className="text-center mb-12">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-muted mb-3">
+    <section id="craft-revival" className="py-14 sm:py-20 lg:py-28 bg-cream">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="text-center mb-8 sm:mb-12">
+          <p className="text-[10px] tracking-[0.4em] uppercase text-muted mb-2.5">
             ✦ Preserving Kashmiri Heritage ✦
           </p>
           <h2 className="font-display text-[30px] leading-tight text-dark title-underline">
@@ -19,11 +19,11 @@ export default function CraftRevival() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8">
           {/* Card 1 — The Pure Tilla Guild */}
           <Link
             href="#pherans"
-            className="group relative block aspect-[4/3] md:aspect-[5/4] overflow-hidden bg-dark shadow-md"
+            className="group relative block aspect-[4/3] sm:aspect-[4/3] md:aspect-[5/4] overflow-hidden bg-dark shadow-md"
           >
             <Image
               src={craftImg}
@@ -32,8 +32,8 @@ export default function CraftRevival() {
               className="object-cover zoom-on-hover opacity-85"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-            <div className="absolute inset-0 p-8 lg:p-10 flex flex-col justify-end text-ivory">
-              <p className="text-[10px] tracking-[0.35em] uppercase text-ivory/80 mb-2">
+            <div className="absolute inset-0 p-6 sm:p-8 lg:p-10 flex flex-col justify-end text-ivory">
+              <p className="text-[9.5px] sm:text-[10px] tracking-[0.35em] uppercase text-ivory/80 mb-2">
                 ◈ Initiative 01
               </p>
               <h3 className="font-display text-2xl md:text-3xl lg:text-4xl mb-2.5">

@@ -39,13 +39,13 @@ const posts: InstagramPost[] = [
 
 export default function Instagram() {
   return (
-    <section className="py-20 lg:py-24 bg-ivory">
-      <div className="max-w-[1500px] mx-auto px-6 lg:px-10">
-        <div className="text-center mb-10">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-muted mb-3">
+    <section className="py-14 sm:py-20 lg:py-24 bg-ivory">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="text-center mb-8 sm:mb-10">
+          <p className="text-[10px] tracking-[0.4em] uppercase text-muted mb-2.5">
             ✦ Follow The Atelier ✦
           </p>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-dark mb-4">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-dark mb-3 sm:mb-4">
             @bespoke_luxurelle
           </h2>
           <Link

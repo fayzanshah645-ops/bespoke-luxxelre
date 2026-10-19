@@ -56,13 +56,76 @@ export default function RichLegacy() {
     <section
       id="rich-legacy"
       ref={sectionRef}
-      className="relative bg-white text-dark min-h-[170vh] py-16 lg:py-20"
+      className="relative bg-white text-dark lg:min-h-[170vh] py-12 sm:py-16 lg:py-20 overflow-hidden"
     >
-      {/* Sticky Content Viewport: Pins the section in place while scrolling */}
-      <div className="sticky top-20 lg:top-24 max-w-[1500px] mx-auto px-6 lg:px-10 h-[calc(100vh-5.5rem)] flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-center">
-          {/* Left Column: Full-Height Clean Image (No badges, No bottom text/texture) */}
-          <div className="lg:col-span-6 flex justify-center">
+      {/* Mobile & Tablet View (Natural Flow, Interactive Tabs, No Sticky Scroll-trap) */}
+      <div className="block lg:hidden max-w-xl mx-auto px-5 sm:px-6">
+        {/* Story Selector Tabs */}
+        <div className="flex items-center justify-center gap-2 mb-6 border-b border-border pb-3">
+          {stories.map((s, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveStep(idx)}
+              className={`text-[10px] tracking-[0.2em] uppercase py-1.5 px-3 transition-all duration-300 ${
+                activeStep === idx
+                  ? "bg-dark text-ivory font-medium"
+                  : "bg-transparent text-muted hover:text-dark"
+              }`}
+            >
+              {idx === 0 ? "✦ Heritage Craft" : "◈ Finished Heirloom"}
+            </button>
+          ))}
+        </div>
+
+        {/* Story Image */}
+        <div className="relative w-full aspect-[4/3] max-h-[360px] overflow-hidden bg-cream shadow-md mb-6">
+          <Image
+            src={current.image}
+            alt={current.imageAlt}
+            fill
+            className="object-cover object-top transition-opacity duration-700"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </div>
+
+        {/* Story Content */}
+        <div className="text-left">
+          <p className="text-[10px] tracking-[0.3em] uppercase text-muted mb-2">
+            {activeStep === 0 ? "Part I — The Craft" : "Part II — The Heirloom"}
+          </p>
+          <h3 className="font-display text-2xl sm:text-3xl text-dark leading-snug mb-3">
+            {current.title}
+          </h3>
+          <p className="text-[13.5px] sm:text-[14.5px] leading-relaxed text-dark/80 font-light mb-6">
+            {current.subtitle}
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <Link
+              href="#pherans"
+              className="inline-block bg-dark text-ivory text-[10.5px] tracking-[0.25em] uppercase px-7 py-3.5 hover:bg-dark-soft transition-colors text-center shadow-sm"
+            >
+              View Kashmiri Pherans →
+            </Link>
+            <a
+              href={`https://wa.me/917889766195?text=${encodeURIComponent(
+                "Hello Bespoke Luxurrele, I would like to enquire about your handcrafted Kashmiri velvet pherans."
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border border-dark text-dark text-[10.5px] tracking-[0.25em] uppercase px-6 py-3.5 hover:bg-dark hover:text-ivory transition-colors text-center"
+            >
+              Enquire with Artisan
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Sticky Viewport (Pins the section in place while scrolling) */}
+      <div className="hidden lg:flex sticky top-20 lg:top-24 max-w-[1500px] mx-auto px-6 lg:px-10 h-[calc(100vh-5.5rem)] flex-col justify-center">
+        <div className="grid grid-cols-12 gap-10 xl:gap-16 items-center">
+          {/* Left Column: Full-Height Clean Image */}
+          <div className="col-span-6 flex justify-center">
             <div className="relative w-full max-w-[540px] h-[520px] md:h-[620px] lg:h-[680px] xl:h-[720px] overflow-hidden bg-cream shadow-xl">
               {stories.map((s, idx) => (
                 <div
@@ -79,15 +142,15 @@ export default function RichLegacy() {
                     fill
                     priority={idx === 0}
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    sizes="50vw"
                   />
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right Column: Ultra-Minimal Content (Title, Subtitle, CTA buttons) */}
-          <div className="lg:col-span-6 flex flex-col justify-center max-w-xl">
+          {/* Right Column: Ultra-Minimal Content */}
+          <div className="col-span-6 flex flex-col justify-center max-w-xl">
             <h3 className="font-display text-3xl md:text-4xl lg:text-5xl text-dark leading-[1.15] mb-6 transition-all duration-500">
               {current.title}
             </h3>

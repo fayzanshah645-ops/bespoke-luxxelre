@@ -8,6 +8,7 @@ import CraftRevival from "./components/CraftRevival";
 import Instagram from "./components/Instagram";
 import Footer from "./components/Footer";
 import WhatsApp from "./components/WhatsApp";
+import ScrollReveal from "./components/ScrollReveal";
 
 export default function Home() {
   return (
@@ -15,12 +16,24 @@ export default function Home() {
       <Header />
       <main id="main">
         <Hero />
-        <LatestCollection />
-        <RichLegacy />
-        <LovedTrusted />
-        <Celebrities />
-        <CraftRevival />
-        <Instagram />
+        <ScrollReveal>
+          <LatestCollection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <RichLegacy />
+        </ScrollReveal>
+        <ScrollReveal>
+          <LovedTrusted />
+        </ScrollReveal>
+        <ScrollReveal>
+          <Celebrities />
+        </ScrollReveal>
+        <ScrollReveal>
+          <CraftRevival />
+        </ScrollReveal>
+        <ScrollReveal>
+          <Instagram />
+        </ScrollReveal>
       </main>
       <Footer />
       <WhatsApp />

@@ -209,21 +209,21 @@ export default function Footer() {
         </div>
 
         {/* Bottom — Logo + Brand, Social Icons, and Secure Badges */}
-        <div className="pt-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="pt-8 sm:pt-10 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
           {/* Logo & Brand matching the header / hero branding */}
-          <Link href="/" className="flex items-center gap-3.5 group">
+          <Link href="/" className="flex items-center gap-3 sm:gap-3.5 group shrink-0 whitespace-nowrap">
             <Image
               src={logoImg}
               alt="Bespoke Luxurrele"
-              width={52}
-              height={52}
+              width={48}
+              height={48}
               className="rounded-full object-contain group-hover:opacity-90 transition-opacity"
             />
-            <div className="flex flex-col text-left leading-none">
-              <span className="font-display text-xl lg:text-2xl text-ivory tracking-[0.06em]">
+            <div className="flex flex-col text-left leading-none whitespace-nowrap">
+              <span className="font-display text-lg sm:text-xl lg:text-2xl text-ivory tracking-[0.06em] whitespace-nowrap">
                 Bespoke Luxurrele
               </span>
-              <span className="text-[7.5px] tracking-[0.35em] uppercase text-ivory/70 mt-1">
+              <span className="text-[6.5px] sm:text-[7.5px] tracking-[0.3em] sm:tracking-[0.35em] uppercase text-ivory/70 mt-1 whitespace-nowrap">
                 Luxurious to the Core
               </span>
             </div>
