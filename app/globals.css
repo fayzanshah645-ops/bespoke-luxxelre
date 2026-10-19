@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --cream: #ffffff;
+  --ivory: #ffffff;
+  --dark: #1a1a1a;
+  --dark-soft: #2a2a2a;
+  --gold: #b89968;
+  --muted: #8a7e6e;
+  --border: #e8e8e8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-cream: var(--cream);
+  --color-ivory: var(--ivory);
+  --color-dark: var(--dark);
+  --color-dark-soft: var(--dark-soft);
+  --color-gold: var(--gold);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-instrument);
+}
+
+html, body {
+  background: #ffffff;
+  color: var(--foreground);
+  font-family: var(--font-nunito), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Fade up animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.fade-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.fade-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.fade-up-delay-3 { animation-delay: 0.3s; opacity: 0; }
+.fade-up-delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+/* Slow zoom on hover */
+.zoom-on-hover {
+  transition: transform 1.2s ease;
+}
+
+.zoom-on-hover:hover {
+  transform: scale(1.05);
+}
+
+/* Smooth image transition */
+.image-swap {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-swap .img-primary,
+.image-swap .img-secondary {
+  transition: opacity 0.7s ease, transform 1.2s ease;
+}
+
+.image-swap .img-secondary {
+  opacity: 0;
+}
+
+.image-swap:hover .img-primary {
+  opacity: 0;
+}
+
+.image-swap:hover .img-secondary {
+  opacity: 1;
+}
+
+/* Underline animation for nav links */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ivory);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5b8a0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Custom underline */
+.title-underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 12px;
+}
+
+.title-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: currentColor;
+}
+
+.title-underline-left {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 12px;
+}
+
+.title-underline-left::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Pulse for whatsapp */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Slider dots */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid currentColor;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: currentColor;
+}
