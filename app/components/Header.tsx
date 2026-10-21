@@ -4,12 +4,27 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logoImg from "../logo.png";
+import { useCart } from "../lib/cart";
+import { getProducts } from "../lib/products";
 
 export default function Header() {
+  const { openCart, totalItems } = useCart();
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const allProducts = getProducts();
+  const searchResults = searchQuery.trim()
+    ? allProducts.filter(
+        (p) =>
+          p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.details.fabric.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -80,76 +95,111 @@ export default function Header() {
               </div>
             </Link>
 
-            {/* Nav - center (single line, short words, balanced spacing) */}
+            {/* Nav - center */}
             <nav
               className={`hidden lg:flex items-center justify-center gap-5 xl:gap-7 text-[11px] xl:text-[12px] tracking-[0.16em] xl:tracking-[0.2em] uppercase font-light whitespace-nowrap transition-colors duration-500 flex-1 ${textColor}`}
             >
-              <Link href="#latest-collection" className={`nav-link whitespace-nowrap ${hoverColor}`} onMouseEnter={() => setOpenMenu(null)}>
+              <Link
+                href="/collections/new-arrivals"
+                className={`nav-link whitespace-nowrap ${hoverColor}`}
+                onMouseEnter={() => setOpenMenu(null)}
+              >
                 New Arrivals
               </Link>
-              <button onMouseEnter={() => setOpenMenu("collections")} className={`nav-link uppercase whitespace-nowrap ${hoverColor}`}>
+              <Link
+                href="/collections"
+                onMouseEnter={() => setOpenMenu("collections")}
+                className={`nav-link uppercase whitespace-nowrap ${hoverColor}`}
+              >
                 Collections
-              </button>
-              <Link href="#latest-collection" onMouseEnter={() => setOpenMenu(null)} className={`nav-link whitespace-nowrap ${hoverColor}`}>
+              </Link>
+              <Link
+                href="/collections/bridal"
+                onMouseEnter={() => setOpenMenu(null)}
+                className={`nav-link whitespace-nowrap ${hoverColor}`}
+              >
                 Bridal
               </Link>
-              <Link href="#latest-collection" onMouseEnter={() => setOpenMenu(null)} className={`nav-link whitespace-nowrap ${hoverColor}`}>
+              <Link
+                href="/collections/festive"
+                onMouseEnter={() => setOpenMenu(null)}
+                className={`nav-link whitespace-nowrap ${hoverColor}`}
+              >
                 Festive
               </Link>
-              <Link href="#pherans" onMouseEnter={() => setOpenMenu(null)} className={`nav-link whitespace-nowrap ${hoverColor}`}>
+              <Link
+                href="/collections/pherans"
+                onMouseEnter={() => setOpenMenu(null)}
+                className={`nav-link whitespace-nowrap ${hoverColor}`}
+              >
                 Pherans
               </Link>
-              <Link href="#appointment" onMouseEnter={() => setOpenMenu(null)} className={`nav-link whitespace-nowrap ${hoverColor}`}>
+              <a
+                href="https://wa.me/917889766195?text=Hello%20Bespoke%20Luxurrele%2C%20I%20would%20like%20to%20book%20a%20private%20bridal%20appointment."
+                target="_blank"
+                rel="noopener noreferrer"
+                onMouseEnter={() => setOpenMenu(null)}
+                className={`nav-link whitespace-nowrap ${hoverColor}`}
+              >
                 Book Now
-              </Link>
-              <Link href="#discover" onMouseEnter={() => setOpenMenu(null)} className={`nav-link whitespace-nowrap ${hoverColor}`}>
+              </a>
+              <Link
+                href="/#rich-legacy"
+                onMouseEnter={() => setOpenMenu(null)}
+                className={`nav-link whitespace-nowrap ${hoverColor}`}
+              >
                 Discover
               </Link>
             </nav>
 
             {/* Icons - right */}
-            <div className={`flex items-center gap-3 sm:gap-4 lg:gap-5 justify-end shrink-0 transition-colors duration-500 ${textColor}`}>
-              <Link
-                href="#account"
-                aria-label="Account"
-                className={`hidden md:block ${hoverColor} transition-colors duration-500`}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </Link>
+            <div
+              className={`flex items-center gap-3 sm:gap-4 lg:gap-5 justify-end shrink-0 transition-colors duration-500 ${textColor}`}
+            >
+              {/* Search Toggle */}
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
-                aria-label="Search"
-                className={`${hoverColor} transition-colors duration-500`}
+                aria-label="Search catalogue"
+                className={`${hoverColor} transition-colors duration-500 p-1 cursor-pointer`}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                >
                   <circle cx="11" cy="11" r="7" />
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
               </button>
-              <Link
-                href="#wishlist"
-                aria-label="Wishlist"
-                className={`hidden md:block ${hoverColor} transition-colors duration-500`}
+
+              {/* Cart Trigger */}
+              <button
+                type="button"
+                onClick={openCart}
+                aria-label="Open Cart Drawer"
+                className={`relative ${hoverColor} transition-colors duration-500 p-1 cursor-pointer`}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-              </Link>
-              <Link
-                href="#cart"
-                aria-label="Cart"
-                className={`relative ${hoverColor} transition-colors duration-500`}
-              >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                >
                   <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
                   <line x1="3" y1="6" x2="21" y2="6" />
                   <path d="M16 10a4 4 0 0 1-8 0" />
                 </svg>
-                <span className="absolute -top-1.5 -right-2 text-[9px] font-medium">2</span>
-              </Link>
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1.5 w-4 h-4 bg-dark text-ivory text-[9px] rounded-full flex items-center justify-center font-medium">
+                    {totalItems}
+                  </span>
+                )}
+              </button>
 
               {/* Mobile menu trigger */}
               <button
@@ -157,7 +207,14 @@ export default function Header() {
                 className="lg:hidden p-1"
                 aria-label="Open menu"
               >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                >
                   <line x1="3" y1="7" x2="21" y2="7" />
                   <line x1="3" y1="12" x2="21" y2="12" />
                   <line x1="3" y1="17" x2="21" y2="17" />
@@ -171,8 +228,9 @@ export default function Header() {
       {/* Mega menu - Women's Collections */}
       {openMenu === "collections" && (
         <div
-          className="absolute top-full left-0 right-0 bg-ivory border-t border-border shadow-xl z-40 text-dark"
+          className="absolute top-full left-0 right-0 bg-white border-t border-border shadow-xl z-40 text-dark"
           onMouseEnter={() => setOpenMenu("collections")}
+          onMouseLeave={() => setOpenMenu(null)}
         >
           <div className="max-w-[1500px] mx-auto px-6 lg:px-10 py-12 grid grid-cols-12 gap-10">
             <div className="col-span-3">
@@ -180,17 +238,63 @@ export default function Header() {
                 Shop By Silhouette
               </h3>
               <ul className="space-y-3.5 text-[14px] font-light">
-                <li><Link href="#latest-collection" className="hover:text-muted">View All Collections</Link></li>
-                <li className="flex items-center gap-2">
-                  <Link href="#latest-collection" className="hover:text-muted">Blush Sharara Sets</Link>
-                  <span className="text-[9px] tracking-[0.2em] uppercase text-gold border border-gold px-1.5 py-0.5">New</span>
+                <li>
+                  <Link
+                    href="/collections"
+                    onClick={() => setOpenMenu(null)}
+                    className="hover:text-gold transition-colors"
+                  >
+                    View All Collections
+                  </Link>
                 </li>
-                <li><Link href="#latest-collection" className="hover:text-muted">Bridal Lehengas</Link></li>
-                <li><Link href="#latest-collection" className="hover:text-muted">Embroidered Anarkalis</Link></li>
-                <li><Link href="#latest-collection" className="hover:text-muted">Signature Kashmiri Pherans</Link></li>
-                <li><Link href="#latest-collection" className="hover:text-muted">Festive Suits &amp; Sets</Link></li>
-                <li><Link href="#latest-collection" className="hover:text-muted">Celebrity Closet</Link></li>
-                <li><Link href="#craft-revival" className="hover:text-muted">Heritage Tilla &amp; Zardozi</Link></li>
+                <li>
+                  <Link
+                    href="/collections/bridal"
+                    onClick={() => setOpenMenu(null)}
+                    className="hover:text-gold transition-colors flex items-center justify-between"
+                  >
+                    <span>Bridal Lehengas &amp; Sets</span>
+                    <span className="text-[9px] tracking-[0.2em] uppercase text-gold border border-gold px-1.5 py-0.5">
+                      Bespoke
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/collections/pherans"
+                    onClick={() => setOpenMenu(null)}
+                    className="hover:text-gold transition-colors"
+                  >
+                    Kashmiri Velvet &amp; Silk Pherans
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/collections/festive"
+                    onClick={() => setOpenMenu(null)}
+                    className="hover:text-gold transition-colors"
+                  >
+                    Festive Shararas &amp; Kurtas
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/collections/anarkalis"
+                    onClick={() => setOpenMenu(null)}
+                    className="hover:text-gold transition-colors"
+                  >
+                    Silver &amp; Gold Zari Anarkalis
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/collections/new-arrivals"
+                    onClick={() => setOpenMenu(null)}
+                    className="hover:text-gold transition-colors"
+                  >
+                    Latest Atelier Arrivals
+                  </Link>
+                </li>
               </ul>
             </div>
             <div className="col-span-6">
@@ -199,23 +303,38 @@ export default function Header() {
               </h3>
               <div className="grid grid-cols-3 gap-5">
                 {[
-                  { title: "Blush Sharara Set", img: "/hero1.jpg" },
-                  { title: "Magenta Bridal Lehenga", img: "/hero.jpg" },
-                  { title: "Silver Zari Anarkali", img: "/hero1.jpg" },
-                  { title: "Ivory Pearl Pheran", img: "/hero.jpg" },
-                  { title: "Golden Tilla Suit", img: "/hero1.jpg" },
-                  { title: "All Collections →", img: "/hero.jpg" },
+                  {
+                    title: "Sozni Tilla Bridal Ensemble",
+                    img: "/pheran1.jpg",
+                    slug: "sozni-tilla-bridal-ensemble",
+                  },
+                  {
+                    title: "Velvet Aari Pheran",
+                    img: "/pheran2.jpg",
+                    slug: "midnight-velvet-aari-pheran",
+                  },
+                  {
+                    title: "Silver Zari Anarkali",
+                    img: "/product1.jpg",
+                    slug: "silver-zari-embroidered-anarkali",
+                  },
                 ].map((s, i) => (
-                  <Link key={i} href="#latest-collection" className="group block">
+                  <Link
+                    key={i}
+                    href={`/products/${s.slug}`}
+                    onClick={() => setOpenMenu(null)}
+                    className="group block"
+                  >
                     <div className="relative aspect-[3/4] overflow-hidden bg-cream">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         src={s.img}
                         alt={s.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                        fill
+                        className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                        sizes="180px"
                       />
                     </div>
-                    <p className="mt-3 text-[12.5px] tracking-wide text-center font-sans italic">
+                    <p className="mt-3 text-[12.5px] tracking-wide text-center font-sans">
                       {s.title}
                     </p>
                   </Link>
@@ -223,18 +342,27 @@ export default function Header() {
               </div>
             </div>
             <div className="col-span-3 relative aspect-[3/4] overflow-hidden bg-cream">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/hero1.jpg"
                 alt="Editorial"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover object-top"
+                sizes="300px"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 text-ivory">
-                <p className="text-[10px] tracking-[0.3em] uppercase opacity-80">Just In</p>
-                <h4 className="font-display text-2xl mt-1">Couture ’26</h4>
-                <Link href="#latest-collection" className="inline-block mt-3 text-[11px] tracking-[0.25em] uppercase border-b border-ivory pb-0.5">
-                  Discover Collection
+                <p className="text-[10px] tracking-[0.3em] uppercase text-gold">
+                  Just In
+                </p>
+                <h4 className="font-display text-2xl mt-1 text-ivory">
+                  Couture ’26
+                </h4>
+                <Link
+                  href="/collections"
+                  onClick={() => setOpenMenu(null)}
+                  className="inline-block mt-3 text-[11px] tracking-[0.25em] uppercase border-b border-ivory pb-0.5"
+                >
+                  Discover Collection →
                 </Link>
               </div>
             </div>
@@ -242,35 +370,107 @@ export default function Header() {
         </div>
       )}
 
-      {/* Search overlay */}
+      {/* Live Search overlay */}
       {searchOpen && (
-        <div className="absolute top-full left-0 right-0 bg-ivory border-t border-border p-8 z-40 text-dark">
-          <div className="max-w-2xl mx-auto">
-            <div className="flex items-center gap-4 border-b border-dark pb-2">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
+        <div className="absolute top-full left-0 right-0 bg-white border-t border-border p-6 sm:p-8 z-40 text-dark shadow-2xl max-h-[85vh] overflow-y-auto">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center gap-4 border-b border-dark pb-3">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.3"
+              >
                 <circle cx="11" cy="11" r="7" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
               <input
                 autoFocus
                 type="text"
-                placeholder="Search the atelier for bridal, sharara, anarkali, pheran..."
-                className="flex-1 bg-transparent outline-none text-base font-light py-2"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by garment, embroidery technique (Tilla, Sozni, Aari), or silhouette..."
+                className="flex-1 bg-transparent outline-none text-base font-light py-1"
               />
-              <button onClick={() => setSearchOpen(false)} className="text-xs tracking-widest uppercase">
-                Close
+              <button
+                onClick={() => setSearchOpen(false)}
+                className="text-xs tracking-widest uppercase hover:opacity-70 cursor-pointer"
+              >
+                Close [ESC]
               </button>
             </div>
-            <div className="mt-6 text-[11px] tracking-[0.25em] uppercase text-muted">
-              Suggested · Bridal Lehenga · Sharara Set · Anarkali Suit · Kashmiri Pheran · Tilla Work
-            </div>
+
+            {/* Quick Suggestions when empty */}
+            {!searchQuery.trim() && (
+              <div className="mt-6 flex flex-wrap items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-muted">
+                <span>Suggested:</span>
+                {["Pheran", "Bridal", "Tilla", "Anarkali", "Velvet"].map(
+                  (term) => (
+                    <button
+                      key={term}
+                      onClick={() => setSearchQuery(term)}
+                      className="border border-border px-3 py-1 bg-[#FAF8F5] text-dark hover:border-dark transition-colors"
+                    >
+                      {term}
+                    </button>
+                  )
+                )}
+              </div>
+            )}
+
+            {/* Live Search Results */}
+            {searchQuery.trim() && (
+              <div className="mt-8">
+                <p className="text-[11px] tracking-[0.2em] uppercase text-muted mb-4">
+                  {searchResults.length} {searchResults.length === 1 ? "Result" : "Results"} for &ldquo;{searchQuery}&rdquo;
+                </p>
+
+                {searchResults.length === 0 ? (
+                  <p className="text-sm text-muted font-light py-8 text-center">
+                    No atelier pieces matched your query. Try searching for &ldquo;Pheran&rdquo;, &ldquo;Tilla&rdquo;, or &ldquo;Silk&rdquo;.
+                  </p>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    {searchResults.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/products/${product.slug}`}
+                        onClick={() => {
+                          setSearchOpen(false);
+                          setSearchQuery("");
+                        }}
+                        className="group block text-left"
+                      >
+                        <div className="relative aspect-[3/4] overflow-hidden bg-cream mb-2">
+                          <Image
+                            src={product.images[0]}
+                            alt={product.title}
+                            fill
+                            className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                            sizes="160px"
+                          />
+                        </div>
+                        <h4 className="font-display text-xs text-dark group-hover:text-gold transition-colors line-clamp-1">
+                          {product.title}
+                        </h4>
+                        <p className="text-[11px] text-muted">
+                          ₹{product.price.toLocaleString("en-IN")}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* Mobile menu drawer — purely for women's couture */}
+      {/* Mobile menu drawer */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[60] bg-ivory lg:hidden overflow-y-auto text-dark">
+        <div className="fixed inset-0 z-[60] bg-white lg:hidden overflow-y-auto text-dark">
           <div className="flex items-center justify-between p-6 border-b border-border">
             <div className="flex items-center gap-3">
               <Image
@@ -282,8 +482,19 @@ export default function Header() {
               />
               <span className="font-display text-xl">Bespoke Luxurrele</span>
             </div>
-            <button onClick={() => setMobileOpen(false)} aria-label="Close">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+            <button
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close"
+              className="p-1"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.2"
+              >
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
@@ -291,23 +502,31 @@ export default function Header() {
           </div>
           <nav className="flex flex-col p-6">
             {[
-              { label: "New Arrivals", href: "#latest-collection" },
-              { label: "Collections", href: "#latest-collection" },
-              { label: "Bridal", href: "#latest-collection" },
-              { label: "Festive", href: "#latest-collection" },
-              { label: "Pherans", href: "#pherans" },
-              { label: "Book Now", href: "#appointment" },
-              { label: "Discover", href: "#discover" },
+              { label: "All Collections", href: "/collections" },
+              { label: "New Arrivals", href: "/collections/new-arrivals" },
+              { label: "Bridal Couture", href: "/collections/bridal" },
+              { label: "Festive Wear", href: "/collections/festive" },
+              { label: "Signature Pherans", href: "/collections/pherans" },
+              { label: "Silk Anarkalis", href: "/collections/anarkalis" },
             ].map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className="py-4 border-b border-border font-display text-2xl"
+                className="py-4 border-b border-border font-display text-2xl hover:text-gold transition-colors"
               >
                 {item.label}
               </Link>
             ))}
+            <a
+              href="https://wa.me/917889766195?text=Hello%20Bespoke%20Luxurrele%2C%20I%20would%20like%20to%20book%20a%20private%20bridal%20appointment."
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+              className="py-4 border-b border-border font-display text-2xl text-emerald-700"
+            >
+              Book Private Consultation →
+            </a>
           </nav>
         </div>
       )}

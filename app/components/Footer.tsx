@@ -8,6 +8,32 @@ import logoImg from "../logo.png";
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [subscribeError, setSubscribeError] = useState("");
+  const [subscribing, setSubscribing] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubscribeError("");
+    setSubscribing(true);
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setSubscribeError(data?.error || "We could not subscribe you right now.");
+        return;
+      }
+      setSubscribed(true);
+      setEmail("");
+    } catch {
+      setSubscribeError("We could not reach the server. Please try again.");
+    } finally {
+      setSubscribing(false);
+    }
+  };
 
   return (
     <footer className="bg-[#0e0d0c] text-ivory pt-20 pb-10 border-t border-ivory/10">
@@ -26,29 +52,37 @@ export default function Footer() {
               appointments, and the occasional behind-the-stitch.
             </p>
           </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubscribed(true);
-              setEmail("");
-            }}
-            className="flex items-center gap-4 border-b border-ivory/30 pb-2.5"
-          >
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your e-mail address"
-              className="flex-1 bg-transparent outline-none text-sm py-2 placeholder:text-ivory/40 text-ivory font-light"
-            />
-            <button
-              type="submit"
-              className="text-[11px] tracking-[0.3em] uppercase text-ivory hover:opacity-70 transition-opacity whitespace-nowrap"
+          <div>
+            <form
+              onSubmit={handleSubscribe}
+              className="flex items-center gap-4 border-b border-ivory/30 pb-2.5"
             >
-              {subscribed ? "Subscribed ✦" : "Subscribe →"}
-            </button>
-          </form>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your e-mail address"
+                className="flex-1 bg-transparent outline-none text-sm py-2 placeholder:text-ivory/40 text-ivory font-light"
+              />
+              <button
+                type="submit"
+                disabled={subscribing}
+                className="text-[11px] tracking-[0.3em] uppercase text-ivory hover:opacity-70 transition-opacity whitespace-nowrap disabled:opacity-50"
+              >
+                {subscribed
+                  ? "Subscribed ✦"
+                  : subscribing
+                  ? "Subscribing…"
+                  : "Subscribe →"}
+              </button>
+            </form>
+            {subscribeError && (
+              <p className="mt-2.5 text-[11.5px] text-[#E8A9A2] font-light">
+                {subscribeError}
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Middle — 4 Balanced Columns with Zero Negative Space */}
@@ -60,28 +94,28 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-[13px] text-ivory/75 font-light">
               <li>
-                <Link href="#latest-collection" className="hover:text-ivory transition-colors">
+                <Link href="/collections/new-arrivals" className="hover:text-ivory transition-colors">
                   New Arrivals
                 </Link>
               </li>
               <li>
-                <Link href="#latest-collection" className="hover:text-ivory transition-colors">
+                <Link href="/collections/bridal" className="hover:text-ivory transition-colors">
                   Bridal Lehengas &amp; Sets
                 </Link>
               </li>
               <li>
-                <Link href="#pherans" className="hover:text-ivory transition-colors">
+                <Link href="/collections/pherans" className="hover:text-ivory transition-colors">
                   Kashmiri Velvet Pherans
                 </Link>
               </li>
               <li>
-                <Link href="#latest-collection" className="hover:text-ivory transition-colors">
+                <Link href="/collections/anarkalis" className="hover:text-ivory transition-colors">
                   Handcrafted Anarkalis
                 </Link>
               </li>
               <li>
-                <Link href="#craft-revival" className="hover:text-ivory transition-colors">
-                  Craft Revival Initiatives
+                <Link href="/collections" className="hover:text-ivory transition-colors">
+                  All Collections
                 </Link>
               </li>
             </ul>
