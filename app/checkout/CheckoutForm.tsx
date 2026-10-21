@@ -158,7 +158,7 @@ export default function CheckoutForm() {
             Thank You for Your Patronage
           </h1>
           <p className="text-sm text-muted font-light max-w-md mx-auto leading-relaxed mb-6">
-            Your bespoke order has been registered with our Srinagar atelier. A confirmation dispatch note has been sent to <strong>{formData.email || "your email"}</strong>.
+            Your bespoke commission has been registered with our Srinagar atelier. Our master concierge will contact you via WhatsApp / Phone at <strong>{formData.phone || "your phone"}</strong> to review custom sizing measurements.
           </p>
 
           <div className="bg-[#FAF8F5] p-5 border border-border text-left my-8 space-y-2.5 text-xs">
@@ -169,6 +169,12 @@ export default function CheckoutForm() {
             <div className="flex justify-between border-b border-border/60 pb-2">
               <span className="text-muted uppercase tracking-wider">Client:</span>
               <span className="text-dark font-medium">{formData.firstName} {formData.lastName}</span>
+            </div>
+            <div className="flex justify-between border-b border-border/60 pb-2">
+              <span className="text-muted uppercase tracking-wider">Payment Method:</span>
+              <span className="text-dark font-medium">
+                {formData.paymentMethod === "cod" ? "Cash on Delivery" : "UPI / Bank Transfer on Confirmation"}
+              </span>
             </div>
             <div className="flex justify-between border-b border-border/60 pb-2">
               <span className="text-muted uppercase tracking-wider">Estimated Dispatch:</span>
@@ -187,11 +193,17 @@ export default function CheckoutForm() {
               rel="noopener noreferrer"
               className="block w-full bg-emerald-800 text-ivory text-[11px] tracking-[0.25em] uppercase py-3.5 hover:bg-emerald-900 transition-colors"
             >
-              Share Order on WhatsApp Atelier →
+              Confirm on WhatsApp Atelier →
             </a>
             <Link
-              href="/"
+              href={`/track?order=${orderComplete}&email=${encodeURIComponent(formData.email)}`}
               className="block w-full border border-dark text-dark text-[11px] tracking-[0.25em] uppercase py-3.5 hover:bg-dark hover:text-ivory transition-colors"
+            >
+              Track Order Status Online →
+            </Link>
+            <Link
+              href="/"
+              className="block w-full text-center text-xs text-muted hover:text-dark py-2 transition-colors uppercase tracking-wider"
             >
               Return to Homepage
             </Link>
@@ -275,14 +287,14 @@ export default function CheckoutForm() {
                   onClick={() => setFormData((p) => ({ ...p, paymentMethod: "razorpay" }))}
                   className="py-3 px-2 border border-border hover:border-dark text-center text-xs font-medium uppercase tracking-wider bg-[#FAF8F5] transition-colors"
                 >
-                  Razorpay / UPI
+                  Direct UPI / QR
                 </button>
                 <button
                   type="button"
                   onClick={() => setFormData((p) => ({ ...p, paymentMethod: "razorpay" }))}
                   className="py-3 px-2 border border-border hover:border-dark text-center text-xs font-medium uppercase tracking-wider bg-[#FAF8F5] transition-colors"
                 >
-                  Credit / Debit
+                  Bank Transfer
                 </button>
                 <button
                   type="button"
@@ -539,15 +551,16 @@ export default function CheckoutForm() {
                     />
                     <div>
                       <span className="text-xs font-medium text-dark block">
-                        Online Payment via Razorpay
+                        Direct UPI &amp; Online Transfer (Recommended)
                       </span>
                       <span className="text-[11px] text-muted font-light block">
-                        UPI, Google Pay, PhonePe, Credit &amp; Debit Cards, Net Banking
+                        Google Pay, PhonePe, Paytm, or Net Banking. Official atelier invoice &amp; UPI QR provided upon order confirmation.
                       </span>
                       <div className="mt-2 flex items-center gap-2 text-[9px] uppercase tracking-wider text-muted">
-                        <span className="border border-border px-1.5 py-0.5 bg-white">VISA</span>
-                        <span className="border border-border px-1.5 py-0.5 bg-white">Mastercard</span>
-                        <span className="border border-border px-1.5 py-0.5 bg-white">UPI</span>
+                        <span className="border border-border px-1.5 py-0.5 bg-white">GPay</span>
+                        <span className="border border-border px-1.5 py-0.5 bg-white">PhonePe</span>
+                        <span className="border border-border px-1.5 py-0.5 bg-white">UPI QR</span>
+                        <span className="border border-border px-1.5 py-0.5 bg-white">Net Banking</span>
                       </div>
                     </div>
                   </div>

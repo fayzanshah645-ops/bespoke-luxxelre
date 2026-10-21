@@ -22,7 +22,7 @@ export default function CraftRevival() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8">
           {/* Card 1 — The Pure Tilla Guild */}
           <Link
-            href="#pherans"
+            href="/collections/pherans"
             className="group relative block aspect-[4/3] sm:aspect-[4/3] md:aspect-[5/4] overflow-hidden bg-dark shadow-md"
           >
             <Image
@@ -50,7 +50,7 @@ export default function CraftRevival() {
 
           {/* Card 2 — From Atelier to Heirloom (Packaging & Trousseau Care) */}
           <Link
-            href="#pherans"
+            href="/collections/bridal"
             className="group relative block aspect-[4/3] md:aspect-[5/4] overflow-hidden bg-dark shadow-md"
           >
             <Image

@@ -150,6 +150,13 @@ export default function Header() {
               >
                 Discover
               </Link>
+              <Link
+                href="/track"
+                onMouseEnter={() => setOpenMenu(null)}
+                className={`nav-link whitespace-nowrap ${hoverColor}`}
+              >
+                Track Order
+              </Link>
             </nav>
 
             {/* Icons - right */}
@@ -311,12 +318,12 @@ export default function Header() {
                   {
                     title: "Velvet Aari Pheran",
                     img: "/pheran2.jpg",
-                    slug: "midnight-velvet-aari-pheran",
+                    slug: "aari-embroidered-velvet-pheran",
                   },
                   {
                     title: "Silver Zari Anarkali",
                     img: "/product1.jpg",
-                    slug: "silver-zari-embroidered-anarkali",
+                    slug: "chinar-sozni-anarkali",
                   },
                 ].map((s, i) => (
                   <Link
@@ -508,6 +515,7 @@ export default function Header() {
               { label: "Festive Wear", href: "/collections/festive" },
               { label: "Signature Pherans", href: "/collections/pherans" },
               { label: "Silk Anarkalis", href: "/collections/anarkalis" },
+              { label: "Track Your Order", href: "/track" },
             ].map((item) => (
               <Link
                 key={item.label}
